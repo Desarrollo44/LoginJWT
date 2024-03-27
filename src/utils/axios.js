@@ -1,10 +1,19 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
+import axios from 'axios';
 
-const axiosInt=axios.create({
-    baseURL:'http://localhost:8080'
+const api = axios.create({
+  baseURL: 'http://localhost:8080',
+  withCredentials: true,
+  credentials: 'include',
 });
 
-export const mock=new AxiosMockAdapter(axiosInt,{delayResponse:0});
+export default api;
 
-export default axiosInt;
+// import axios from 'axios';
+
+// const api = axios.create({
+//   baseURL: 'http://localhost:8080', // Actuliza al puerto correcto (8080) donde está corriendo el servidor
+//   withCredentials: true,
+//   credentials: 'include',
+// });
+
+// export default api;

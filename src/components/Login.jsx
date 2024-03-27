@@ -1,41 +1,84 @@
 import { Link } from "react-router-dom";
-import { RouteComponentProps } from "react-router";
-import { React, FC } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { type } from "@testing-library/user-event/dist/type";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Box, TextField, Button, Card, Typography } from "@mui/material";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import api from "../utils/axios";
 
-type SomeComponentsProps = RouteComponentProps;
-const Login: FC<SomeComponentsProps> = ({ history }): JSX.Element => {
+function Login(props) {
+    const [vision,setVision]=useState(true);
+    
     const {
         register,
-        handleSumbit,
+        handleSubmit,
         formState: { errors },
     } = useForm();
+    const { history } = props;
 
-    const login = (data) => {
-        let params = {
-            alias: data.alias,
-            password: data.password
+    const login =async (data) => {
+        try {
+            const response = await axios.post('http://localhost:8080/login', [data.username,data.password]);
+              console.log(response.data);
+        } catch (error) {
+           console.log('error ',error); 
+        }
+        
         };
-        axios
-            .post('/api/accountlogin', params)
-            .then(function (response) {
-                if (response.data.success = fasle) {
-                    console.log(response.data.error)
-                } else {
-                    localStorage.setItem("auth", response.data.token);
-                    setTimeout(() => {
-                        history.push("/");
-                    }, 3000);
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-              });
-    };
-    return(<>
-    a
-    </>);
+       
+    return (
+        <>
+            <Box
+                display={'flex'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                style={{ height: '100vh' }}
+            >
+                <Card style={{ maxWidth: "320px" }} padding={2}>
+                    <Typography variant="h3" margin={2}>Login Form</Typography>
+                    <form autoComplete="off" onSubmit={handleSubmit(login)}>
+                        <TextField
+                            style={{ margin: '1rem' }}
+                            variant="outlined"
+                            label="Alias"
+                            type="text"
+                            {...register("username", { required: "alias is required" })}
+                        />
+                        {errors.alias && (
+                            <p style={{ fontSize: 14, color: 'red' }}>
+                                {errors.username.message}
+                            </p>
+                        )}
+                        <Box display={'flex'} flexDirection={'row'} gap={1}>
+                        <TextField
+                            style={{ margin: '1rem' }}
+                            variant="outlined"
+                            label="Password"
+                            type={vision ? "password":"text"}
+                            {...register("password", { required: "password is required" })}
+                        />
+                        {errors.password && (
+                            <p style={{ fontSize: 14, color: 'red' }}>
+                                {errors.password.message}
+                            </p>
+                        )}
+                        <Button onClick={()=>setVision(!vision)}>{vision ? <VisibilityIcon/> : <VisibilityOffIcon/> }</Button>
+                        </Box>
+                        <Button variant="outlined" type="submit" style={{ margin: '1rem' }}>
+                            Login
+                        </Button>
+                    </form>
+                    <p  style={{ margin: '1rem' }}>
+                        Have an Account?{" "}
+                        <Link style={{ textDecoration: "none" }} to={"/register"}>
+                            Sign Up
+                        </Link>
+                    </p>
+                </Card>
+            </Box>
+        </>
+    );
 }
-export default login;
+
+export default Login;
