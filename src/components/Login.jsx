@@ -19,8 +19,9 @@ function Login(props) {
 
     const login =async (data) => {
         try {
-            const response = await axios.post('http://localhost:8080/login', [data.username,data.password]);
+            const response = await axios.post('http://localhost:8080/auth/login', [data.username,data.password]);
               console.log(response.data);
+              localStorage.setItem("auth", response.data.token);
         } catch (error) {
            console.log('error ',error); 
         }
