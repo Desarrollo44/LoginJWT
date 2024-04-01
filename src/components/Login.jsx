@@ -6,33 +6,44 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box, TextField, Button, Card, Typography } from "@mui/material";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import api from "../utils/axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login(props) {
-    const [vision,setVision]=useState(true);
-    
+    //const [error,setError]=useState(false);
+    const [vision, setVision] = useState(true);
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
     const { history } = props;
-
-    const login =async (data) => {
+    const handleVision=()=>{
+        setVision(!vision);
+        toast('hola mundo', {
+            autoClose: 3000,
+          });
+    }
+    const login = async (data) => {
         try {
             const response = await axios.post('http://localhost:8080/auth/login', {
-                username:data.username,
-                password:data.password});
-              console.log(response.data);
-              localStorage.setItem("auth", response.data.token);
-              setTimeout(() => {
-                window.location.href="/";
-              }, 3000);
+                username: data.username,
+                password: data.password
+            });
+            console.log(response.data);
+            localStorage.setItem("auth", response.data.token);
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 3000);
         } catch (error) {
-           console.log('error ',error); 
+            console.log('error ', error);
+            
         }
-        
-        };
-      
+
+
+    };
+
     return (
         <>
             <Box
@@ -57,27 +68,28 @@ function Login(props) {
                             </p>
                         )}
                         <Box display={'flex'} flexDirection={'row'} gap={1}>
-                        <TextField
-                            style={{ margin: '1rem' }}
-                            variant="outlined"
-                            label="Password"
-                            type={vision ? "password":"text"}
-                            {...register("password", { required: "password is required" })}
-                        />
-                        {errors.password && (
-                            <p style={{ fontSize: 14, color: 'red' }}>
-                                {errors.password.message}
-                            </p>
-                        )}
-                        <Button onClick={()=>setVision(!vision)}>{vision ? <VisibilityIcon/> : <VisibilityOffIcon/> }</Button>
+                            <TextField
+                                style={{ margin: '1rem' }}
+                                variant="outlined"
+                                label="Password"
+                                type={vision ? "password" : "text"}
+                                {...register("password", { required: "password is required" })}
+                            />
+                            {errors.password && (
+                                <p style={{ fontSize: 14, color: 'red' }}>
+                                    {errors.password.message}
+                                </p>
+                            )}
+                            <Button onClick={handleVision }>{vision ? <VisibilityIcon /> : <VisibilityOffIcon />}</Button>
+                            <ToastContainer/>
                         </Box>
                         <Button variant="outlined" type="submit" style={{ margin: '1rem' }}>
                             Login
                         </Button>
                     </form>
-                    <p  style={{ margin: '1rem' }}>
+                    <p style={{ margin: '1rem' }}>
                         Have an Account?{" "}
-                        <Link style={{ textDecoration: "none" }} to={"/register"} onClick={()=>( window.location.href = "/register")}>
+                        <Link style={{ textDecoration: "none" }} to={"/register"} onClick={() => (window.location.href = "/register")}>
                             Sign Up
                         </Link>
                     </p>
