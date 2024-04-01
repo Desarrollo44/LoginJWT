@@ -11,7 +11,7 @@ function Home (props){
     }
     return(<>
         <Typography>Bienvenido Usario</Typography>
-        <Button type="submit"onClick={logout}>salir</Button>
+        <Button variant="outlined" type="submit"onClick={logout}>salir</Button>
     </>);
 }
 export default Home;

@@ -19,26 +19,26 @@ function Login(props) {
         formState: { errors },
     } = useForm();
     const { history } = props;
-    const handleVision=()=>{
+    const handleVision = () => {
         setVision(!vision);
-        toast('hola mundo', {
-            autoClose: 3000,
-          });
     }
     const login = async (data) => {
         try {
-            const response = await axios.post('http://localhost:8080/auth/login', {
+            const response = await axios.post('/auth/login', {
                 username: data.username,
                 password: data.password
             });
             console.log(response.data);
-            localStorage.setItem("auth", response.data.token);
+            sessionStorage.setItem("auth", response.data.token);
             setTimeout(() => {
                 window.location.href = "/";
             }, 3000);
         } catch (error) {
             console.log('error ', error);
-            
+            toast.error(error.response.data.message, {
+                position: 'bottom-center',
+                autoClose: 3000,
+            });
         }
 
 
@@ -62,10 +62,10 @@ function Login(props) {
                             type="text"
                             {...register("username", { required: "alias is required" })}
                         />
-                        {errors.alias && (
-                            <p style={{ fontSize: 14, color: 'red' }}>
+                        {errors.username && (
+                            <Typography  margin={'0rem 2rem'} style={{ fontSize: 14, color: 'red' }}>
                                 {errors.username.message}
-                            </p>
+                            </Typography>
                         )}
                         <Box display={'flex'} flexDirection={'row'} gap={1}>
                             <TextField
@@ -75,14 +75,14 @@ function Login(props) {
                                 type={vision ? "password" : "text"}
                                 {...register("password", { required: "password is required" })}
                             />
-                            {errors.password && (
-                                <p style={{ fontSize: 14, color: 'red' }}>
-                                    {errors.password.message}
-                                </p>
-                            )}
-                            <Button onClick={handleVision }>{vision ? <VisibilityIcon /> : <VisibilityOffIcon />}</Button>
-                            <ToastContainer/>
+                            <Button onClick={handleVision}>{vision ? <VisibilityIcon /> : <VisibilityOffIcon />}</Button>
+                            <ToastContainer />
                         </Box>
+                        {errors.password && (
+                            <Typography variant="h7" margin={'2rem'} style={{ fontSize: 14, color: 'red' }}>
+                                {errors.password.message}
+                            </Typography>
+                        )}<br/>
                         <Button variant="outlined" type="submit" style={{ margin: '1rem' }}>
                             Login
                         </Button>

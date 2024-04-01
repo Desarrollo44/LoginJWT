@@ -22,7 +22,8 @@ const SignUp = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (handleValidate()) {
-            console.log(formData);
+            const formJson= JSON.stringify(formData);
+            console.log(formJson);
             setFormData({
                 username: "",
                 password: "",
