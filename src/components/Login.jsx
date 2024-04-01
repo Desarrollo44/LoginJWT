@@ -27,7 +27,7 @@ function Login(props) {
         }
         
         };
-       
+      
     return (
         <>
             <Box
@@ -72,7 +72,7 @@ function Login(props) {
                     </form>
                     <p  style={{ margin: '1rem' }}>
                         Have an Account?{" "}
-                        <Link style={{ textDecoration: "none" }} to={"/register"}>
+                        <Link style={{ textDecoration: "none" }} to={"/register"} onClick={()=>( window.location.href = "/register")}>
                             Sign Up
                         </Link>
                     </p>
