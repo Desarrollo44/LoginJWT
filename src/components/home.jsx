@@ -6,8 +6,12 @@ function Home (props){
     const {history}=props;
     const logout=()=>{
         localStorage.clear();
-        history.push("/login");
+        window.location.href="/login";
 
     }
+    return(<>
+        <Typography>Bienvenido Usario</Typography>
+        <Button type="submit"onClick={logout}>salir</Button>
+    </>);
 }
 export default Home;

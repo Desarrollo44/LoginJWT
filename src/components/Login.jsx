@@ -19,9 +19,14 @@ function Login(props) {
 
     const login =async (data) => {
         try {
-            const response = await axios.post('http://localhost:8080/auth/login', [data.username,data.password]);
+            const response = await axios.post('http://localhost:8080/auth/login', {
+                username:data.username,
+                password:data.password});
               console.log(response.data);
               localStorage.setItem("auth", response.data.token);
+              setTimeout(() => {
+                window.location.href="/";
+              }, 3000);
         } catch (error) {
            console.log('error ',error); 
         }
