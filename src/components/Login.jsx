@@ -5,7 +5,6 @@ import axios from "axios";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box, TextField, Button, Card, Typography } from "@mui/material";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import api from "../utils/axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -58,7 +57,7 @@ function Login(props) {
                         <TextField
                             style={{ margin: '1rem' }}
                             variant="outlined"
-                            label="Alias"
+                            label="User Name"
                             type="text"
                             {...register("username", { required: "alias is required" })}
                         />

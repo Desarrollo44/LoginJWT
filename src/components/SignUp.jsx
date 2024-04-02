@@ -3,10 +3,11 @@ import { useState, useEffect } from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 import axios from "axios";
 import { Box, TextField, Button, Card, Typography } from "@mui/material";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
-const SignUp = (props) => {
-    const { history } = props;
+const SignUp = () => {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -19,11 +20,19 @@ const SignUp = (props) => {
             ...formData, [name]: value
         });
     };
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (handleValidate()) {
+            toast.success("usuario registrado",{
+                position:"bottom-center",
+                autoClose: 3000
+            });
             const formJson= JSON.stringify(formData);
-            console.log(formJson);
+            const response=await axios.post('/api/postUser',{
+                username:formData.username,
+                password:formData.password
+            })
+            console.log(response);
             setFormData({
                 username: "",
                 password: "",
@@ -121,6 +130,7 @@ const SignUp = (props) => {
                     </Button>
 
                 </p>
+                <ToastContainer/>
             </Box>
         </Box>
     </>);
