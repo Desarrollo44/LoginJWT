@@ -1,8 +1,8 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { useState} from "react";
+import { Link} from "react-router-dom";
 import axios from "axios";
-import { Box, TextField, Button, Card, Typography } from "@mui/material";
+import { Box, TextField, Button, Typography } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -27,7 +27,7 @@ const SignUp = () => {
                 position:"bottom-center",
                 autoClose: 3000
             });
-            const formJson= JSON.stringify(formData);
+            // const formJson= JSON.stringify(formData);
             const response=await axios.post('/api/postUser',{
                 username:formData.username,
                 password:formData.password
@@ -60,7 +60,7 @@ const SignUp = () => {
     }
 
     const handleLink = () => {
-        window.location.href = "/login";
+        window.location.href = "/";
     }
 
     return (<>
@@ -124,7 +124,7 @@ const SignUp = () => {
                 <p style={{ margin: '1rem' }}>
                     Have an Account?{" "}
                     <Button type="button" onClick={handleLink}>
-                        <Link style={{ textDecoration: "none" }} to={"/login"} >
+                        <Link style={{ textDecoration: "none" }} to={"/"} >
                             Log in
                         </Link>
                     </Button>

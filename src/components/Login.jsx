@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -17,7 +17,7 @@ function Login(props) {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const { history } = props;
+    // const { history } = props;
     const handleVision = () => {
         setVision(!vision);
     }
@@ -30,8 +30,8 @@ function Login(props) {
             console.log(response.data);
             sessionStorage.setItem("auth", response.data.token);
             setTimeout(() => {
-                window.location.href = "/";
-            }, 3000);
+                window.location.href = "/home";
+            }, 2000);
         } catch (error) {
             console.log('error ', error);
             toast.error(error.response.data.message, {
